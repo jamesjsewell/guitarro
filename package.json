@@ -1,0 +1,29 @@
+{
+  "name": "guitarro",
+  "version": "1.0.0",
+  "description": "guitar scales visualizer",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prod": "babel ./src/guitarro.js --out-file index.js --source-maps inline"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jamesjsewell/guitarro.git"
+  },
+  "keywords": [
+    "guitar"
+  ],
+  "author": "james sewell",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jamesjsewell/guitarro/issues"
+  },
+  "homepage": "https://github.com/jamesjsewell/guitarro#readme",
+  "devDependencies": {
+    "@babel/cli": "^7.7.0",
+    "@babel/core": "^7.7.2",
+    "@babel/preset-env": "^7.7.1",
+    "babel-preset-minify": "^0.5.1"
+  }
+}
