@@ -1,18 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Guitarro</title>
 
-    <link rel="stylesheet" type="text/css" href="index.css">
-    <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
-</head>
+    <link rel="stylesheet" type="text/css" href="../index.css" />
+    <link
+      href="https://fonts.googleapis.com/css?family=Roboto&display=swap"
+      rel="stylesheet"
+    />
+  </head>
 
-<body>
-    <script src="index.js"></script>
-</body>
-
+  <body>
+    <div id="wrapper" class="app-wrapper">
+      <div class="controls-wrapper">
+        <select id="noteSelect"></select>
+      </div>
+      <div class="guitar-wrapper">
+        <div class="fret-board" id="fretBoard"></div>
+      </div>
+    </div>
+    <script src="./src/guitarro.js"></script>
+  </body>
 </html>

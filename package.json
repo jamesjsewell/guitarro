@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "prod": "babel ./src/guitarro.js --out-file index.js --source-maps inline"
+    "build": "babel ./src/guitarro.js --out-file index.js --source-maps inline"
   },
   "repository": {
     "type": "git",
@@ -24,6 +24,7 @@
     "@babel/cli": "^7.7.0",
     "@babel/core": "^7.7.2",
     "@babel/preset-env": "^7.7.1",
-    "babel-preset-minify": "^0.5.1"
+    "babel-preset-minify": "^0.5.1",
+    "express": "^4.17.1"
   }
 }

@@ -1,16 +1,16 @@
 const intervals = [
-  "C",
-  "C#",
-  "D",
-  "D#",
-  "E",
-  "F",
-  "F#",
-  "G",
-  "G#",
-  "A",
-  "A#",
-  "B"
+  'C',
+  'C#',
+  'D',
+  'D#',
+  'E',
+  'F',
+  'F#',
+  'G',
+  'G#',
+  'A',
+  'A#',
+  'B'
 ];
 
 const standardTuningNotes = [
@@ -20,11 +20,12 @@ const standardTuningNotes = [
   intervals[7],
   intervals[11],
   intervals[4]
-].reverse();
+];
 
 const scales = {
   aMajor: {
-    name: "A Maj",
+    id: 'aMajor',
+    name: 'A Maj',
     notes: [
       intervals[9],
       intervals[11],
@@ -36,7 +37,8 @@ const scales = {
     ]
   },
   cMajor: {
-    name: "C Maj",
+    id: 'cMajor',
+    name: 'C Maj',
     notes: [
       intervals[0],
       intervals[2],
@@ -48,7 +50,8 @@ const scales = {
     ]
   },
   fSharpMajor: {
-    name: "F# Maj",
+    id: 'fSharpMajor',
+    name: 'F# Maj',
     notes: [
       intervals[6],
       intervals[8],
@@ -60,7 +63,8 @@ const scales = {
     ]
   },
   gMajor: {
-    name: "G Maj",
+    id: 'gMajor',
+    name: 'G Maj',
     notes: [
       intervals[7],
       intervals[9],
@@ -73,7 +77,7 @@ const scales = {
   }
 };
 
-var selectedScale = scales["cMajor"];
+var selectedScale = scales['cMajor'];
 
 function getNotesOfString(startingNote) {
   var notes = [];
@@ -93,73 +97,170 @@ function getNotesOfString(startingNote) {
   return notes;
 }
 
-function buildFretboard() {
-  document.getElementById("fretBoard").innerHTML = standardTuningNotes
-    .map(startingNote => getNotesOfString(startingNote))
-    .map(
-      (guitarString, stringNumber) =>
-        `<div class="guitar-string">
-          <span class="string-graphic"></span>
-          ${guitarString
-            .map(
-              (note, noteNumber) =>
-                `<div class="fret"> 
-                ${
-                  selectedScale.notes.includes(note)
-                    ? `<span class='note'>
-                      <p>${note}</p>
-                    </span>`
-                    : ""
-                } 
-                ${
-                  stringNumber === 5
-                    ? `<span class="fret-number">${noteNumber + 1}</span>`
-                    : ""
-                }
-                ${
-                  stringNumber === 3 &&
-                  (noteNumber === 4 || noteNumber === 6 || noteNumber === 8)
-                    ? `<span class="fret-dot"></span>`
-                    : ""
-                }
+// function buildFretboard() {
+//   document.getElementById("fretBoard").innerHTML = standardTuningNotes
+//     .map(startingNote => getNotesOfString(startingNote))
+//     .map(
+//       (guitarString, stringNumber) =>
+//         `<div class="guitar-string">
+//           <span class="string-graphic"></span>
+//           ${guitarString
+//             .map(
+//               (note, noteNumber) =>
+//                 `<div class="fret">
+//                 ${
+//                   selectedScale.notes.includes(note)
+//                     ? `<span class='note'>
+//                       <p>${note}</p>
+//                     </span>`
+//                     : ""
+//                 }
+//                 ${
+//                   stringNumber === 5
+//                     ? `<span class="fret-number">${noteNumber + 1}</span>`
+//                     : ""
+//                 }
+//                 ${
+//                   stringNumber === 3 &&
+//                   (noteNumber === 4 || noteNumber === 6 || noteNumber === 8)
+//                     ? `<span class="fret-dot"></span>`
+//                     : ""
+//                 }
 
-                ${
-                  noteNumber === 11 &&
-                  (stringNumber === 1 || stringNumber === 5)
-                    ? `<span class="fret-dot"></span>`
-                    : ""
-                }
-              </div>`
-            )
-            .join("")}
-        </div>`
-    )
-    .join("");
+//                 ${
+//                   noteNumber === 11 &&
+//                   (stringNumber === 1 || stringNumber === 5)
+//                     ? `<span class="fret-dot"></span>`
+//                     : ""
+//                 }
+//               </div>`
+//             )
+//             .join("")}
+//         </div>`
+//     )
+//     .join("");
+// }
+
+// function buildLandscapeFretboard() {
+//   document.getElementById(
+//     'fretBoard'
+//   ).innerHTML = `<div class="frets-edge">${buildFrets()}</div>
+//     ${standardTuningNotes
+//       .map(
+//         (startingNote, stringNumber) =>
+//           `${buildString(startingNote)} ${
+//             stringNumber < 5
+//               ? `<div class="frets">${buildFrets(stringNumber)}</div>`
+//               : ''
+//           }`
+//       )
+//       .join('')}
+//     <div class="frets-edge">${buildFrets()}</div>
+//     </div>`;
+// }
+
+// const buildLandscapeFrets = stringNumber => {
+//   let frets = ``;
+//   for (var i = 0; i < 12; i++) {
+//     frets += `<div class="fret">${
+//       (stringNumber === 2 && (i === 4 || i === 6 || i === 8)) ||
+//       (i === 11 && (stringNumber === 0 || stringNumber === 4))
+//         ? `<div class="fret-dot"></div>`
+//         : ''
+//     }</div>`;
+//   }
+//   return frets;
+// };
+
+// const buildLandscapeString = startingNote =>
+//   `<div class="guitar-string">${getNotesOfString(startingNote)
+//     .map(
+//       (note, noteNumber) =>
+//         `<div class="note">${
+//           selectedScale.notes.includes(note)
+//             ? `<div class="note-text-backdrop"></div><span class="note-text"><p>${note}</p></span>`
+//             : ''
+//         }</div>`
+//     )
+//     .join('')}</div>`;
+
+////////////////////////////////////////
+
+function buildFretboard({ portrait }) {
+  document.getElementById(
+    'fretBoard'
+  ).innerHTML = `<div class="frets-edge">${buildFrets()}</div> 
+    ${standardTuningNotes
+      .map(
+        (startingNote, stringNumber) =>
+          `${buildString(startingNote)} ${
+            stringNumber < 5
+              ? `<div class="frets">${buildFrets(stringNumber)}</div>`
+              : ''
+          }`
+      )
+      .join('')} 
+    <div class="frets-edge">${buildFrets()}</div>
+    </div>`;
 }
 
-function buildNoteSelector() {
+const buildFrets = stringNumber => {
+  let frets = ``;
+  for (var i = 0; i < 12; i++) {
+    frets += `<div class="fret">${
+      (stringNumber === 2 && (i === 4 || i === 6 || i === 8)) ||
+      (i === 11 && (stringNumber === 0 || stringNumber === 4))
+        ? `<div class="fret-dot"></div>`
+        : ''
+    }</div>`;
+  }
+  return frets;
+};
+
+const buildString = startingNote =>
+  `<div class="guitar-string">${getNotesOfString(startingNote)
+    .map(
+      (note, noteNumber) =>
+        `<div class="note">${
+          selectedScale.notes.includes(note)
+            ? `<div class="note-text-backdrop"></div><span class="note-text"><p>${note}</p></span>`
+            : ''
+        }</div>`
+    )
+    .join('')}</div>`;
+
+function buildNoteSelector({ portrait }) {
   var options = [];
-  for (const scaleName in scales) {
+  for (const scaleId in scales) {
     options = [
       ...options,
-      `<option value="${scaleName}">${scales[scaleName].name}</option>`
+      `<option value="${scaleId}">${scales[scaleId].name}</option>`
     ];
   }
-  var scaleSelect = document.createElement("select");
+  var scaleSelect = document.getElementById('noteSelect');
   scaleSelect.innerHTML = options.join();
-  scaleSelect.value = "cMajor";
-
-  scaleSelect.addEventListener("change", e => {
-    selectedScale = scales[e.target.value];
-    buildFretboard();
-  });
-
-  document.body.appendChild(scaleSelect);
+  scaleSelect.value = selectedScale.id;
 }
 
-const fretBoardWrapper = document.createElement("div");
-fretBoardWrapper.innerHTML =
-  '<div id="fretBoard" class="guitar-strings" ></div>';
-document.body.appendChild(fretBoardWrapper);
-buildNoteSelector();
-buildFretboard();
+function reDrawApp() {
+  if (window.innerHeight > window.innerWidth) {
+    buildNoteSelector({ portrait: true });
+    buildFretboard({ portrait: true });
+    return;
+  }
+  buildNoteSelector({ portrait: false });
+  buildFretboard({ portrait: false });
+}
+
+window.addEventListener('resize', () => {
+  reDrawApp();
+});
+
+document.getElementById('noteSelect').addEventListener('change', e => {
+  selectedScale = scales[e.target.value];
+  document.getElementById('noteSelect').value = e.target.value;
+
+  reDrawApp();
+});
+
+reDrawApp();

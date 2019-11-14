@@ -4,77 +4,108 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
     border: 0;
     font-size: 100%;
     font: inherit;
-    vertical-align: baseline;
     box-sizing: border-box;
 }
 
-.guitar-strings {
-    margin-top: 20px;
-    border-left: 10px solid rgba(100, 20, 0, .6);
-    background: burlywood;
+html, body {
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden;
+}
+
+.app-wrapper {
+    height: 100vh;
+    width: 80%;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+}
+
+.controls-wrapper {
+    height: 5%;
+    width: 100%;
+    flex-grow: 1;
+}
+
+.guitar-wrapper {
+    height: 95%;
+    width: 100%;
+    flex-grow: 1;
+}
+
+.fret-board {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+}
+
+.fret-board-landscape {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
 }
 
 .guitar-string {
-    position: relative;
+    height: 100%;
     display: flex;
-    width: 100%;
+    flex-direction: column;
+    align-items: stretch;
 }
 
-.string-graphic {
-    height: 2px;
+.guitar-string-landscape {
     width: 100%;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background: black;
-    z-index: 6;
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+}
+
+.frets {
+    height: 100%;
+    flex-grow: 1;
+    background: burlywood;
+}
+
+.frets-edge {
+    height: 100%;
+    width: 2%;
+    background: burlywood;
 }
 
 .fret {
-    width: 150px;
-    height: 50px;
-    padding: 1px;
+    height: 8.33%;
+    border-bottom: 4px solid grey;
     position: relative;
-    border-left: 2px solid rgb(0, 0, 0, .2);
-    border-right: 3px solid silver;
 }
 
 .note {
-    width: 15px;
-    height: 15px;
-    position: absolute;
+    height: 8.33%;
+    width: .5rem;
+    flex-grow: 1;
+    position: relative;
+    background: silver;
+    border-right: 1px dashed darkgray;
+    border-left: 1px dashed darkgrey;
+}
+
+.note-text-backdrop {
+    height: 20px;
+    width: 20px;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    z-index: 7;
+    position: absolute;
 }
 
-.note p {
-    position: absolute;
+.note-text {
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%);
-    margin: 0px;
-    color: black;
-    background: burlywood;
-    font-family: 'Roboto', sans-serif;
-    font-size: 16px;
-    z-index: 8;
-}
-
-.fret:nth-child(5), .note:nth-child(7), .note:nth-child(9), .note:nth-child(12) {
-    background: dark-grey;
-}
-
-.fret-number {
-    padding: 2px;
+    transform: translate(-50%, -50%) rotate(90deg);
     position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, 100%);
     color: black;
-    font-size: 10px;
     font-family: 'Roboto', sans-serif;
 }
 
@@ -84,19 +115,7 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -182%);
+    transform: translate(-50%, -50%);
     background: white;
     border-radius: 100%;
-}
-
-@media (orientation: portrait) {
-    html {
-        transform: rotate(-90deg);
-        transform-origin: left top;
-        width: 100vh;
-        overflow-x: hidden;
-        position: absolute;
-        top: 100%;
-        left: 0;
-    }
 }
