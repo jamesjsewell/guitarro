@@ -5,7 +5,12 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "babel ./src/guitarro.js --out-file index.js --source-maps inline"
+    "dev": "npm run build-scss && concurrently 'npm:watch-*'",
+    "watch-js": "babel ./src/guitarro.js --out-file index.js --source-maps inline --watch",
+    "build-scss": "node-sass --omit-source-map-url ./src/guitarro.scss ./index.css",
+    "watch-scss": "node-sass --watch --omit-source-map-url ./src/guitarro.scss ./index.css",
+    "watch-css": "postcss ./index.css -u autoprefixer cssnano --env production -o ./index.css --watch",
+    "watch-server": "node server.js"
   },
   "repository": {
     "type": "git",
@@ -24,7 +29,12 @@
     "@babel/cli": "^7.7.0",
     "@babel/core": "^7.7.2",
     "@babel/preset-env": "^7.7.1",
+    "autoprefixer": "^9.7.1",
     "babel-preset-minify": "^0.5.1",
-    "express": "^4.17.1"
+    "concurrently": "^5.0.0",
+    "cssnano": "^4.1.10",
+    "express": "^4.17.1",
+    "node-sass": "^4.13.0",
+    "postcss-cli": "^6.1.3"
   }
 }
