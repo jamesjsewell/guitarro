@@ -91,28 +91,55 @@ html,
 body {
   height: 100vh;
   width: 100vw;
-  overflow: hidden;
+  overflow-x: scroll;
+  overflow-y: hidden;
 }
 
-.app-wrapper {
-  height: 100vh;
-  width: 80%;
-  margin: auto;
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
-}
-
-.controls-wrapper {
-  height: 5%;
-  width: 100%;
-  flex-grow: 1;
+input,
+button,
+select,
+option {
+  background: none;
+  padding: none;
+  border: none;
+  background-image: none;
+  background-color: transparent;
 }
 
 .portrait-mode {
+  &.app-wrapper {
+    height: 100vh;
+    width: 100vw;
+    min-width: 200px;
+    margin: auto;
+    display: flex;
+    flex-direction: row-reverse;
+  }
+
+  .controls-wrapper {
+    height: 50%;
+    width: 8%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .fullscreen-button {
+  }
+
+  .note-select {
+    width: 50px;
+    transform: rotate(90deg);
+    transform-origin: bottom left;
+  }
+
+  .note-select option {
+    font-family: 'Roboto', sans-serif;
+  }
+
   .guitar-wrapper {
-    height: 95%;
-    width: 100%;
+    height: 100%;
+    width: 92%;
     flex-grow: 1;
   }
 
@@ -190,6 +217,30 @@ body {
 }
 
 .landscape-mode {
+  &.app-wrapper {
+    height: 96vh;
+    width: 100vw;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .controls-wrapper {
+    height: 5%;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    flex-grow: 1;
+  }
+
+  .fullscreen-button {
+  }
+
+  .note-select option {
+    font-family: 'Roboto', sans-serif;
+  }
+
   .guitar-wrapper {
     height: 95%;
     width: 100%;

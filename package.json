@@ -6,10 +6,12 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "npm run build-scss && concurrently 'npm:watch-*'",
+    "build": "npm run build-js && npm run build-scss && npm run build-css",
     "watch-js": "babel ./src/guitarro.js --out-file index.js --source-maps inline --watch",
-    "build-scss": "node-sass --omit-source-map-url ./src/guitarro.scss ./index.css",
-    "watch-scss": "node-sass --watch --omit-source-map-url ./src/guitarro.scss ./index.css",
-    "watch-css": "postcss ./index.css -u autoprefixer cssnano --env production -o ./index.css --watch",
+    "build-js": "babel ./src/guitarro.js --out-file index.js --source-maps inline",
+    "build-scss": "node-sass ./src/guitarro.scss ./index.css",
+    "watch-scss": "node-sass --watch ./src/guitarro.scss ./index.css",
+    "build-css": "postcss ./index.css -u autoprefixer cssnano --env production -o ./index.css",
     "watch-server": "node server.js"
   },
   "repository": {
