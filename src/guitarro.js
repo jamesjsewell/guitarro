@@ -22,62 +22,41 @@ const standardTuningNotes = [
   intervals[4]
 ];
 
-const scales = {
-  aMajor: {
-    id: 'aMajor',
-    name: 'A Maj',
-    notes: [
-      intervals[9],
-      intervals[11],
-      intervals[1],
-      intervals[2],
-      intervals[4],
-      intervals[6],
-      intervals[8]
-    ]
-  },
-  cMajor: {
-    id: 'cMajor',
-    name: 'C Maj',
-    notes: [
-      intervals[0],
-      intervals[2],
-      intervals[4],
-      intervals[5],
-      intervals[7],
-      intervals[9],
-      intervals[11]
-    ]
-  },
-  fSharpMajor: {
-    id: 'fSharpMajor',
-    name: 'F# Maj',
-    notes: [
-      intervals[6],
-      intervals[8],
-      intervals[10],
-      intervals[11],
-      intervals[1],
-      intervals[3],
-      intervals[5]
-    ]
-  },
-  gMajor: {
-    id: 'gMajor',
-    name: 'G Maj',
-    notes: [
-      intervals[7],
-      intervals[9],
-      intervals[11],
-      intervals[0],
-      intervals[2],
-      intervals[4],
-      intervals[6]
-    ]
-  }
-};
+let scalesMap = {};
 
-var selectedScale = scales['cMajor'];
+const steps = [2, 2, 1, 2, 2, 2, 1];
+
+function buildScale(rootNote) {
+  let scale = [];
+
+  let i = intervals.indexOf(rootNote);
+  for (const step of steps) {
+    if (!intervals[i + step]) {
+      let startIndex = i === intervals.length - 1 && step === 2 ? 1 : 0;
+      i = startIndex;
+      scale = [...scale, intervals[startIndex]];
+      continue;
+    }
+
+    scale = [...scale, intervals[i + step]];
+
+    i += step;
+  }
+  return scale;
+}
+
+function buildScalesMap() {
+  for (let interval of intervals) {
+    scalesMap = {
+      ...scalesMap,
+      [interval]: { id: interval, notes: buildScale(interval) }
+    };
+  }
+}
+
+buildScalesMap();
+
+var selectedScale = scalesMap['C'];
 
 function getNotesOfString(startingNote) {
   var notes = [];
@@ -147,10 +126,10 @@ const buildString = startingNote =>
 
 function buildNoteSelector({ portrait }) {
   var options = [];
-  for (const scaleId in scales) {
+  for (const scaleName in scalesMap) {
     options = [
       ...options,
-      `<option value="${scaleId}">${scales[scaleId].name}</option>`
+      `<option value="${scaleName}">${scaleName}</option>`
     ];
   }
   var scaleSelect = document.getElementById('noteSelect');
@@ -175,7 +154,7 @@ window.addEventListener('resize', () => {
 });
 
 document.getElementById('noteSelect').addEventListener('change', e => {
-  selectedScale = scales[e.target.value];
+  selectedScale = scalesMap[e.target.value];
   document.getElementById('noteSelect').value = e.target.value;
 
   reDrawApp();
