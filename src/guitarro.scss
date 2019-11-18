@@ -124,16 +124,17 @@ option {
     justify-content: space-between;
   }
 
-  .fullscreen-button {
+  .key-and-scale-select {
+    display: inline-flex;
+    flex-direction: column;
   }
 
-  .note-select {
-    width: 50px;
+  .key-select,
+  .scale-select {
+    width: 70px;
+    margin-bottom: 80px;
     transform: rotate(90deg);
     transform-origin: bottom left;
-  }
-
-  .note-select option {
     font-family: 'Roboto', sans-serif;
   }
 
@@ -234,10 +235,16 @@ option {
     flex-grow: 1;
   }
 
-  .fullscreen-button {
+  .key-and-scale-select {
+    display: inline-flex;
+    flex-direction: row;
   }
 
-  .note-select option {
+  .key-select,
+  .scale-select {
+    width: 60px;
+    margin-left: 10px;
+    margin-right: 10px;
     font-family: 'Roboto', sans-serif;
   }
 

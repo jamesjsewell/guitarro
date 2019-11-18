@@ -24,23 +24,30 @@ const standardTuningNotes = [
 
 let scalesMap = {};
 
-const steps = [2, 2, 1, 2, 2, 2, 1];
+const degreesMap = {
+  major: { id: 'major', degrees: [2, 2, 1, 2, 2, 2, 1] },
+  minor: { id: 'minor', degrees: [2, 1, 2, 2, 1, 2, 2] }
+};
+
+let selectedKey = intervals[0];
+let selectedScaleDegrees = degreesMap.major;
+let selectedScale = null;
 
 function buildScale(rootNote) {
   let scale = [];
 
   let i = intervals.indexOf(rootNote);
-  for (const step of steps) {
-    if (!intervals[i + step]) {
-      let startIndex = i === intervals.length - 1 && step === 2 ? 1 : 0;
+  for (const degree of selectedScaleDegrees.degrees) {
+    if (!intervals[i + degree]) {
+      let startIndex = i === intervals.length - 1 && degree === 2 ? 1 : 0;
       i = startIndex;
       scale = [...scale, intervals[startIndex]];
       continue;
     }
 
-    scale = [...scale, intervals[i + step]];
+    scale = [...scale, intervals[i + degree]];
 
-    i += step;
+    i += degree;
   }
   return scale;
 }
@@ -52,15 +59,14 @@ function buildScalesMap() {
       [interval]: { id: interval, notes: buildScale(interval) }
     };
   }
+  selectedScale = scalesMap[selectedKey];
 }
 
 buildScalesMap();
 
-var selectedScale = scalesMap['C'];
-
 function getNotesOfString(startingNote) {
-  var notes = [];
-  var i =
+  let notes = [];
+  let i =
     intervals.indexOf(startingNote) === 11
       ? 0
       : intervals.indexOf(startingNote) + 1;
@@ -101,7 +107,7 @@ function buildFretboard({ portrait }) {
 
 const buildFrets = stringNumber => {
   let frets = ``;
-  for (var i = 0; i < 12; i++) {
+  for (let i = 0; i < 12; i++) {
     frets += `<div class="fret">${
       (stringNumber === 2 && (i === 4 || i === 6 || i === 8)) ||
       (i === 11 && (stringNumber === 0 || stringNumber === 4))
@@ -124,28 +130,40 @@ const buildString = startingNote =>
     )
     .join('')}</div>`;
 
-function buildNoteSelector({ portrait }) {
-  var options = [];
-  for (const scaleName in scalesMap) {
+function buildKeySelector() {
+  let options = [];
+  for (const keyName in scalesMap) {
+    options = [...options, `<option value="${keyName}">${keyName}</option>`];
+  }
+  let keySelect = document.getElementById('keySelect');
+  keySelect.innerHTML = options.join();
+  keySelect.value = selectedKey;
+}
+
+function buildScaleSelector() {
+  let options = [];
+  for (const scaleName in degreesMap) {
     options = [
       ...options,
       `<option value="${scaleName}">${scaleName}</option>`
     ];
   }
-  var scaleSelect = document.getElementById('noteSelect');
+  let scaleSelect = document.getElementById('scaleSelect');
   scaleSelect.innerHTML = options.join();
-  scaleSelect.value = selectedScale.id;
+  scaleSelect.value = selectedScaleDegrees.id;
 }
 
 function reDrawApp() {
+  buildScalesMap();
+  buildKeySelector();
+  buildScaleSelector();
+
   if (window.innerHeight > window.innerWidth) {
     document.getElementById('wrapper').className = 'app-wrapper portrait-mode';
-    buildNoteSelector({ portrait: true });
     buildFretboard({ portrait: true });
     return;
   }
   document.getElementById('wrapper').className = 'app-wrapper landscape-mode';
-  buildNoteSelector({ portrait: false });
   buildFretboard({ portrait: false });
 }
 
@@ -153,9 +171,16 @@ window.addEventListener('resize', () => {
   reDrawApp();
 });
 
-document.getElementById('noteSelect').addEventListener('change', e => {
-  selectedScale = scalesMap[e.target.value];
-  document.getElementById('noteSelect').value = e.target.value;
+document.getElementById('keySelect').addEventListener('change', e => {
+  selectedKey = e.target.value;
+  document.getElementById('keySelect').value = e.target.value;
+
+  reDrawApp();
+});
+
+document.getElementById('scaleSelect').addEventListener('change', e => {
+  selectedScaleDegrees = degreesMap[e.target.value];
+  document.getElementById('scaleSelect').value = e.target.value;
 
   reDrawApp();
 });
