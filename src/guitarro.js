@@ -33,6 +33,8 @@ let selectedKey = intervals[0];
 let selectedScaleDegrees = degreesMap.major;
 let selectedScale = null;
 
+let stringsArray = [];
+
 function buildScale(rootNote) {
   let scale = [];
 
@@ -103,6 +105,30 @@ function buildFretboard({ portrait }) {
       .join('')} 
     <div class="frets-edge">${buildFrets()}</div>
     </div>`;
+
+  let shapes = [];
+  const shapeNumbers = [1, 7, 6, 5, 4, 3, 2];
+  let currentShape = 1;
+
+  stringsArray[0].map((note, noteIndex) => {
+    const rootNoteIndex = stringsArray[0].indexOf(selectedKey);
+
+    if (noteIndex === 0) {
+      currentShape = shapeNumbers[rootNoteIndex];
+      shapes = [currentShape];
+      return;
+    }
+
+    currentShape = shapeNumbers[shapeNumbers.indexOf(currentShape) - 1];
+
+    if (currentShape === undefined) {
+      currentShape = shapeNumbers[shapeNumbers.length - 1];
+    }
+
+    shapes = [...shapes, currentShape];
+  });
+
+  console.log(shapes);
 }
 
 const buildFrets = stringNumber => {
@@ -118,8 +144,15 @@ const buildFrets = stringNumber => {
   return frets;
 };
 
-const buildString = startingNote =>
-  `<div class="guitar-string">${getNotesOfString(startingNote)
+const buildString = startingNote => {
+  const stringNotes = getNotesOfString(startingNote);
+  stringsArray = [];
+  stringsArray = [
+    ...stringsArray,
+    stringNotes.filter(note => selectedScale.notes.includes(note))
+  ];
+
+  return `<div class="guitar-string">${stringNotes
     .map(
       note =>
         `<div class="note">${
@@ -129,6 +162,7 @@ const buildString = startingNote =>
         }</div>`
     )
     .join('')}</div>`;
+};
 
 function buildKeySelector() {
   let options = [];
