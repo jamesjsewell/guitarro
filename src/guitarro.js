@@ -85,6 +85,7 @@ function getNotesOfString(startingNote) {
 }
 
 function buildFretboard({ portrait }) {
+  stringsArray = []
   const startingNotes =
     portrait === true
       ? [...standardTuningNotes]
@@ -128,7 +129,17 @@ function buildFretboard({ portrait }) {
     shapes = [...shapes, currentShape];
   });
 
-  console.log(shapes);
+
+  let shapeNotes = []
+
+  shapes.map((shape, shapeIndex)=>{
+    let strings = [...stringsArray]
+    strings.reverse().map((string)=>{
+     const notesArray = string.slice(shapeIndex, shapeIndex + 3)
+     console.log(notesArray, shapeIndex)
+     
+    })
+  })
 }
 
 const buildFrets = stringNumber => {
@@ -146,7 +157,6 @@ const buildFrets = stringNumber => {
 
 const buildString = startingNote => {
   const stringNotes = getNotesOfString(startingNote);
-  stringsArray = [];
   stringsArray = [
     ...stringsArray,
     stringNotes.filter(note => selectedScale.notes.includes(note))
