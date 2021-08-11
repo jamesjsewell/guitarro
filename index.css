@@ -293,3 +293,6 @@ option {
   transform: translate(-50%, -50%);
   background: white;
   border-radius: 100%; }
+
+.highlight {
+  background: red; }

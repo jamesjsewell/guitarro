@@ -85,7 +85,7 @@ function getNotesOfString(startingNote) {
 }
 
 function buildFretboard({ portrait }) {
-  stringsArray = []
+  stringsArray = [];
   const startingNotes =
     portrait === true
       ? [...standardTuningNotes]
@@ -97,7 +97,7 @@ function buildFretboard({ portrait }) {
     ${startingNotes
       .map(
         (startingNote, stringNumber) =>
-          `${buildString(startingNote)} ${
+          `${buildString(startingNote, stringNumber)} ${
             stringNumber < 5
               ? `<div class="frets">${buildFrets(stringNumber)}</div>`
               : ''
@@ -112,7 +112,9 @@ function buildFretboard({ portrait }) {
   let currentShape = 1;
 
   stringsArray[0].map((note, noteIndex) => {
-    const rootNoteIndex = stringsArray[0].indexOf(selectedKey);
+    const rootNoteIndex = stringsArray[0].indexOf(
+      stringsArray[0].find(note => note.note === selectedKey)
+    );
 
     if (noteIndex === 0) {
       currentShape = shapeNumbers[rootNoteIndex];
@@ -129,17 +131,32 @@ function buildFretboard({ portrait }) {
     shapes = [...shapes, currentShape];
   });
 
+  let shapeNotes = {};
 
-  let shapeNotes = []
+  shapes.map((shape, shapeIndex) => {
+    let strings = [...stringsArray];
+    strings.reverse().map((string, stringNumber) => {
+      let notes = [];
+      if (stringNumber === 4 || stringNumber === 5) {
+        notes = string.slice(shapeIndex + 1, shapeIndex + 1 + 3);
+      } else {
+        notes = string.slice(shapeIndex, shapeIndex + 3);
+      }
 
-  shapes.map((shape, shapeIndex)=>{
-    let strings = [...stringsArray]
-    strings.reverse().map((string)=>{
-     const notesArray = string.slice(shapeIndex, shapeIndex + 3)
-     console.log(notesArray, shapeIndex)
-     
-    })
-  })
+      if (!shapeNotes[`shape_${shape}`]) {
+        shapeNotes[`shape_${shape}`] = notes;
+        return;
+      }
+      shapeNotes[`shape_${shape}`] = [
+        ...shapeNotes[`shape_${shape}`],
+        ...notes
+      ];
+    });
+  });
+
+  shapeNotes['shape_4'].map(note => {
+    document.getElementById(note.id).className = 'highlight';
+  });
 }
 
 const buildFrets = stringNumber => {
@@ -155,19 +172,22 @@ const buildFrets = stringNumber => {
   return frets;
 };
 
-const buildString = startingNote => {
-  const stringNotes = getNotesOfString(startingNote);
+const buildString = (startingNote, stringNumber) => {
+  const stringNotes = getNotesOfString(startingNote).map(note => ({
+    id: stringNumber + note,
+    note
+  }));
   stringsArray = [
     ...stringsArray,
-    stringNotes.filter(note => selectedScale.notes.includes(note))
+    stringNotes.filter(note => selectedScale.notes.includes(note.note))
   ];
 
   return `<div class="guitar-string">${stringNotes
     .map(
       note =>
         `<div class="note">${
-          selectedScale.notes.includes(note)
-            ? `<div class="note-text-backdrop"></div><span class="note-text"><p>${note}</p></span>`
+          selectedScale.notes.includes(note.note)
+            ? `<div class="note-text-backdrop"></div><span class="note-text"><p id=${note.id}>${note.note}</p></span>`
             : ''
         }</div>`
     )
