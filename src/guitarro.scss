@@ -205,6 +205,21 @@ option {
     font-family: 'Roboto', sans-serif;
   }
 
+  .root-note {
+    height: 8.33%;
+    width: 0.5rem;
+    flex-grow: 1;
+    position: relative;
+    background: silver;
+    border: none;
+    border-right: 1px dashed darkgray;
+    border-left: 1px dashed darkgrey;
+  }
+
+  .root-note-text {
+    transform: translate(-50%, -50%) rotate(90deg);
+  }
+
   .fret-dot {
     width: 20px;
     height: 20px;
@@ -219,9 +234,9 @@ option {
 
 .landscape-mode {
   &.app-wrapper {
-    height: 85vh;
+    
     width: 100vw;
-    margin: auto;
+  
     display: flex;
     flex-direction: column;
     align-items: stretch;
@@ -230,6 +245,7 @@ option {
   .controls-wrapper {
     height: 5%;
     width: 100%;
+    margin-bottom: 50px;
     display: flex;
     justify-content: space-between;
     flex-grow: 1;
@@ -251,12 +267,11 @@ option {
   .guitar-wrapper {
     height: 95%;
     width: 100%;
-    flex-grow: 1;
   }
 
   .fret-board {
-    height: 100%;
     width: 100%;
+    height: 85vh;
     display: flex;
     flex-direction: column;
     align-items: stretch;
@@ -297,6 +312,7 @@ option {
     background: silver;
     border-top: 1px dashed darkgray;
     border-bottom: 1px dashed darkgrey;
+
   }
 
   .note-text-backdrop {
@@ -334,5 +350,40 @@ option {
   border: 1px solid blue;
   text-align: center;
   background: lightblue;
-  
+}
+
+.selected-shape {
+  border: 2px solid black;
+}
+
+.root-note {
+  height: 0.5rem;
+  width: 8.33%;
+  flex-grow: 1;
+  position: relative;
+  background: silver;
+  border-top: 1px dashed darkgray;
+  border-bottom: 1px dashed darkgrey;
+}
+
+.root-note-text-backdrop {
+  width: 40px;
+  height: 40px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  position: absolute;
+  background: blue;
+}
+
+.root-note-text {
+  width: 20px;
+  height: 20px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  position: absolute;
+  color: black;
+  font-family: 'Roboto', sans-serif;
+  font-size: 1rem;
 }

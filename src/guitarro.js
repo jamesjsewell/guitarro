@@ -113,31 +113,36 @@ function buildFretboard({ portrait }) {
 
   let shapes = [];
   const shapeNumbers = [1, 7, 6, 5, 4, 3, 2];
-  let currentShape = 1;
+  let currentShapeNumber = 1;
 
   shapeNotes = []
 
-  stringsArray[0].map((note, noteIndex) => {
+  stringsArray[0].forEach((note, noteIndex) => {
     const rootNoteIndex = stringsArray[0].indexOf(
       stringsArray[0].find(note => note.note === selectedKey)
     );
 
+    let currentShape = null
+
     if (noteIndex === 0) {
-      currentShape = shapeNumbers[rootNoteIndex];
-      shapes = [{ fret: note.fret, shapeNumber: currentShape }];
+      currentShapeNumber = shapeNumbers[rootNoteIndex]
+      currentShape = { fret: note.fret, shapeNumber: shapeNumbers[rootNoteIndex] } 
+      shapes = [currentShape];
       return;
     }
 
-    currentShape = { fret: note.fret, shapeNumber: shapeNumbers[shapeNumbers.indexOf(currentShape) - 1] };
+    currentShapeNumber = shapeNumbers[shapeNumbers.indexOf(currentShapeNumber) - 1 ] 
+    currentShape = { fret: note.fret, shapeNumber: currentShapeNumber };
 
-    if (currentShape === undefined) {
-      currentShape = { fret: note.fret, shapeNumber: shapeNumbers[shapeNumbers.length - 1] }
+    if (currentShapeNumber === undefined) {
+      currentShapeNumber =  shapeNumbers[shapeNumbers.length - 1]
+      currentShape = { fret: note.fret, shapeNumber: currentShapeNumber }
     }
 
     shapes = [...shapes, currentShape];
   });
 
-  shapes.map((shape, shapeIndex) => {
+  shapes.forEach((shape, shapeIndex) => {
     let strings = portrait? [...stringsArray] : [...stringsArray].reverse()
     strings.map((string, stringNumber) => {
       let notes = [];
@@ -165,6 +170,8 @@ function buildFretboard({ portrait }) {
       ];
     });
   });
+
+  buildShapeSelect(shapes)
 
   shapeNotes[selectedShape].map(note => {
     document.getElementById(note.id).className = 'highlight';
@@ -196,12 +203,20 @@ const buildString = (startingNote, stringNumber) => {
     stringNotes.filter(note => selectedScale.notes.includes(note.note))
   ];
 
+  const lowE = isPortrait? 0 : 5
+
   return `<div class="guitar-string">${stringNotes
     .map(
-      note =>
+      (note, noteIndex) => stringNumber !== lowE?
         `<div class="note">${
           selectedScale.notes.includes(note.note)
-            ? `<div class="note-text-backdrop"></div><span class="note-text"><p  id=${note.id}>${note.note}</p></span>`
+            ? `<div class="note-text-backdrop"></div><span class="note-text"><p id=${note.id}>${note.note}</p></span>`
+            : ''
+        }</div>` 
+        : 
+        `<div class="root-note">${
+          selectedScale.notes.includes(note.note)
+            ? `<button rootNoteFret="${note.fret}" class="root-note-text-backdrop shape-select"></button><span class="root-note-text"><p id=${note.id}>${note.note}</p></span>`
             : ''
         }</div>`
     )
@@ -229,6 +244,35 @@ function buildScaleSelector() {
   let scaleSelect = document.getElementById('scaleSelect');
   scaleSelect.innerHTML = options.join();
   scaleSelect.value = selectedScaleDegrees.id;
+}
+
+function buildShapeSelect(shapes) {
+  document.getElementById('shape-select').innerHTML = shapes.map((shape, shapeIndex)=> 
+  `<button 
+    shapeIndex=${shapeIndex} 
+    class="shape-select ${Number(selectedShape) === Number(shapeIndex)? 'selected-shape' : ''}">
+    ${shape.shapeNumber}
+  </button>`
+  ).join('')
+
+
+  document.querySelectorAll(
+    '[rootNoteFret]'
+  ).forEach(el=>{
+    let shapeIndex = 0
+    shapes.forEach((shape,i)=>{
+      if(Number(el.getAttribute('rootNoteFret')) === Number(shape.fret)) {
+        shapeIndex = i
+      }
+    })
+    el.setAttribute('shapeIndex', shapeIndex)
+  })
+
+  document.querySelectorAll('.shape-select', '[rootNoteFret]').forEach(el=>el.addEventListener('click', e=>{
+    selectedShape = e.target.getAttribute('shapeIndex') 
+    buildFretboard(isPortrait)
+  }))
+
 }
 
 function reDrawApp() {
@@ -273,8 +317,3 @@ document.getElementById('fullScreen').addEventListener('click', e => {
   }
   screenfull.toggle();
 });
-
-document.querySelectorAll('.shapeSelect').forEach(el=>el.addEventListener('click', e=>{
-  selectedShape = e.target.getAttribute('shapeIndex') 
-  buildFretboard(isPortrait)
-}))
