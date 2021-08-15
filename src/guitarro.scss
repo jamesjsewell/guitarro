@@ -219,7 +219,7 @@ option {
 
 .landscape-mode {
   &.app-wrapper {
-    height: 96vh;
+    height: 85vh;
     width: 100vw;
     margin: auto;
     display: flex;
@@ -300,8 +300,6 @@ option {
   }
 
   .note-text-backdrop {
-    height: 20px;
-    width: 20px;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
@@ -309,13 +307,15 @@ option {
   }
 
   .note-text {
+    width: 20px;
+    height: 20px;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     position: absolute;
     color: black;
     font-family: 'Roboto', sans-serif;
-    font-size: 1.3rem;
+    font-size: 1rem;
   }
 
   .fret-dot {
@@ -331,10 +331,7 @@ option {
 }
 
 .highlight {
-  border-radius: 100%;
-  width: 30px;
-  height: 30px;
-  border: 3px solid blue;
+  border: 1px solid blue;
   text-align: center;
   background: lightblue;
   

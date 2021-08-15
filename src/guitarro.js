@@ -124,14 +124,14 @@ function buildFretboard({ portrait }) {
 
     if (noteIndex === 0) {
       currentShape = shapeNumbers[rootNoteIndex];
-      shapes = [currentShape];
+      shapes = [{ fret: note.fret, shapeNumber: currentShape }];
       return;
     }
 
-    currentShape = shapeNumbers[shapeNumbers.indexOf(currentShape) - 1];
+    currentShape = { fret: note.fret, shapeNumber: shapeNumbers[shapeNumbers.indexOf(currentShape) - 1] };
 
     if (currentShape === undefined) {
-      currentShape = shapeNumbers[shapeNumbers.length - 1];
+      currentShape = { fret: note.fret, shapeNumber: shapeNumbers[shapeNumbers.length - 1] }
     }
 
     shapes = [...shapes, currentShape];
@@ -141,10 +141,18 @@ function buildFretboard({ portrait }) {
     let strings = portrait? [...stringsArray] : [...stringsArray].reverse()
     strings.map((string, stringNumber) => {
       let notes = [];
+      let onRootFret = true
+      let noteOnShapeStartFret = string.indexOf(string.find(note=>note.fret === shape.fret))
+      if(noteOnShapeStartFret === -1){
+        onRootFret = false
+        noteOnShapeStartFret = string.indexOf(string.find(note=>note.fret === shape.fret + 1))
+      }
+      
       if (stringNumber === 4 || stringNumber === 5) {
-        notes = string.slice(shapeIndex + 1, shapeIndex + 1 + 3);
+        const start = onRootFret? noteOnShapeStartFret + 1 : noteOnShapeStartFret
+        notes = string.slice(start, start + 3);
       } else {
-        notes = string.slice(shapeIndex, shapeIndex + 3);
+        notes = string.slice(noteOnShapeStartFret, noteOnShapeStartFret + 3);
       }
 
       if (!shapeNotes[shapeIndex]) {
