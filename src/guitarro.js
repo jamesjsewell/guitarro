@@ -26,7 +26,7 @@ let selectedScale = null;
 
 let stringsArray = [];
 let shapeNotes = [];
-let selectedShape = { index: 0, fret: 0, number: 0 }
+let selectedShape = { index: 0, fret: 0, number: 0 };
 
 let isPortrait = false;
 
@@ -135,15 +135,24 @@ function buildFretboard({ portrait }) {
       return;
     }
 
-    let index = shapeNumbers.indexOf(currentShapeNumber) - 1
-    currentShapeNumber =
-      shapeNumbers[index];
-    currentShape = { fret: note.fret, number: currentShapeNumber, index, note: note.note };
+    let index = shapeNumbers.indexOf(currentShapeNumber) - 1;
+    currentShapeNumber = shapeNumbers[index];
+    currentShape = {
+      fret: note.fret,
+      number: currentShapeNumber,
+      index,
+      note: note.note
+    };
 
-    index = shapeNumbers.length - 1
+    index = shapeNumbers.length - 1;
     if (currentShapeNumber === undefined) {
       currentShapeNumber = shapeNumbers[index];
-      currentShape = { fret: note.fret, number: currentShapeNumber, index, note: note.note };
+      currentShape = {
+        fret: note.fret,
+        number: currentShapeNumber,
+        index,
+        note: note.note
+      };
     }
 
     shapes = [...shapes, currentShape];
@@ -225,7 +234,13 @@ const buildString = (startingNote, stringNumber) => {
           }</div>`
         : `<div class="root-note">${
             selectedScale.notes.includes(note.note)
-              ? `<button rootNoteFret="${note.fret}" class="root-note-text-backdrop shape-select root-note-shape-select ${selectedShape.note === note.note? 'selected-root-note' : ''}"></button><span class="root-note-text"><p id=${note.id}>${note.note}</p></span>`
+              ? `<button rootNoteFret="${
+                  note.fret
+                }" class="root-note-text-backdrop shape-select root-note-shape-select ${
+                  selectedShape.note === note.note ? 'selected-root-note' : ''
+                }"></button><span class="root-note-text"><p id=${note.id}>${
+                  note.note
+                }</p></span>`
               : ''
           }</div>`
     )
@@ -256,13 +271,12 @@ function buildScaleSelector() {
 }
 
 function buildShapeSelect(shapes) {
-
-  shapes.forEach((shape, shapeIndex)=>{
-    if(Number(shapeIndex)===Number(selectedShape.index)) {
-      selectedShape = shape
-      selectedShape.index = shapeIndex
+  shapes.forEach((shape, shapeIndex) => {
+    if (Number(shapeIndex) === Number(selectedShape.index)) {
+      selectedShape = shape;
+      selectedShape.index = shapeIndex;
     }
-  })
+  });
 
   document.getElementById('shape-select').innerHTML = shapes
     .map(
@@ -279,23 +293,23 @@ function buildShapeSelect(shapes) {
     .join('');
 
   document.querySelectorAll('[rootNoteFret]').forEach((el, elementIndex) => {
-    let theShape = null
-    let theShapeIndex = null
+    let theShape = null;
+    let theShapeIndex = null;
     shapes.forEach((shape, i) => {
-      if (Number(el.getAttribute('rootNoteFret')) !== Number(shape.fret)) return
-      theShape = shape
-      theShapeIndex = i
-      if(i !== selectedShape.index){
-        el.classList.remove('selected-root-note')
-        return
-      } 
-      el.classList.add('selected-root-note')
-      
+      if (Number(el.getAttribute('rootNoteFret')) !== Number(shape.fret))
+        return;
+      theShape = shape;
+      theShapeIndex = i;
+      if (i !== selectedShape.index) {
+        el.classList.remove('selected-root-note');
+        return;
+      }
+      el.classList.add('selected-root-note');
     });
-   
+
     el.setAttribute('shapeIndex', theShapeIndex);
-    el.setAttribute('shapeNumber', theShape.number)
-    el.setAttribute('shapeNote', theShape.note )   
+    el.setAttribute('shapeNumber', theShape.number);
+    el.setAttribute('shapeNote', theShape.note);
   });
 
   document.querySelectorAll('.shape-select', '[rootNoteFret]').forEach(el =>

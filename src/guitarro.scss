@@ -234,9 +234,8 @@ option {
 
 .landscape-mode {
   &.app-wrapper {
-    
     width: 100vw;
-  
+
     display: flex;
     flex-direction: column;
     align-items: stretch;
@@ -312,7 +311,6 @@ option {
     background: silver;
     border-top: 1px dashed darkgray;
     border-bottom: 1px dashed darkgrey;
-
   }
 
   .note-text-backdrop {
@@ -386,15 +384,15 @@ option {
   color: black;
   font-family: 'Roboto', sans-serif;
   font-size: 1rem;
-  pointer-events:none;
+  pointer-events: none;
   p {
-    pointer-events:none;
+    pointer-events: none;
   }
 }
 
 .root-note-shape-select {
-  text-decoration:none;
-  font-family:Arial;
+  text-decoration: none;
+  font-family: Arial;
   display: block;
 }
 
