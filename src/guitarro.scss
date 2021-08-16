@@ -263,6 +263,7 @@ $green-background: #a7ffa8;
     display: flex;
     justify-content: space-between;
     flex-grow: 1;
+    flex-basis: 0;
   }
 
   .key-and-scale-select {
@@ -369,6 +370,8 @@ $green-background: #a7ffa8;
 #shape-select-buttons {
   display: inline-flex;
   flex-direction: row;
+  flex-basis: 0;
+  flex-grow: 1;
   .shape-select-button {
     margin: 5px;
     padding: 5px;
@@ -437,4 +440,6 @@ $green-background: #a7ffa8;
 
 .fullscreen-button {
   padding: 0;
+  flex-grow: 1;
+  flex-basis: 0;
 }
