@@ -120,7 +120,7 @@ $green-background: #a7ffa8;
   }
 
   .controls-wrapper {
-    height: 100%;
+    height: 70%;
     padding: 5px;
     width: 8%;
     display: flex;
@@ -144,6 +144,7 @@ $green-background: #a7ffa8;
   }
 
   #shape-select-buttons {
+    background: burlywood;
     flex-direction: column;
     .shape-select-button {
       font-size: .8rem;
