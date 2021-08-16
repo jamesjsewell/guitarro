@@ -386,4 +386,18 @@ option {
   color: black;
   font-family: 'Roboto', sans-serif;
   font-size: 1rem;
+  pointer-events:none;
+  p {
+    pointer-events:none;
+  }
+}
+
+.root-note-shape-select {
+  text-decoration:none;
+  font-family:Arial;
+  display: block;
+}
+
+.selected-root-note {
+  background: green;
 }

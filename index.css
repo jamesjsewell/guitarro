@@ -341,4 +341,15 @@ option {
   position: absolute;
   color: black;
   font-family: 'Roboto', sans-serif;
-  font-size: 1rem; }
+  font-size: 1rem;
+  pointer-events: none; }
+  .root-note-text p {
+    pointer-events: none; }
+
+.root-note-shape-select {
+  text-decoration: none;
+  font-family: Arial;
+  display: block; }
+
+.selected-root-note {
+  background: green; }
