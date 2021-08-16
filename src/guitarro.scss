@@ -142,9 +142,9 @@ $green-background: #a7ffa8;
     font-family: 'Roboto', sans-serif;
   }
 
-  #shape-select-buttons{
+  #shape-select-buttons {
     flex-direction: column;
-    .shape-select{
+    .shape-select {
       margin: 5px;
       transform: rotate(90deg);
     }
@@ -362,10 +362,10 @@ $green-background: #a7ffa8;
   background: $green-background;
 }
 
-#shape-select-buttons{
+#shape-select-buttons {
   display: inline-flex;
   flex-direction: row;
-  .shape-select-button{
+  .shape-select-button {
     margin: 5px;
   }
   .shape-select-button:hover {
