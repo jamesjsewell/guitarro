@@ -234,13 +234,13 @@ const buildString = (startingNote, stringNumber) => {
           }</div>`
         : `<div class="root-note">${
             selectedScale.notes.includes(note.note)
-              ? `<button rootNoteFret="${
-                  note.fret
-                }" class="root-note-text-backdrop shape-select root-note-shape-select ${
+              ? `<div class="root-note-text-backdrop ${
                   selectedShape.note === note.note ? 'selected-root-note' : ''
-                }"></button><span class="root-note-text"><p id=${note.id}>${
+                }"></div><span class="root-note-text"><p id=${note.id}>${
                   note.note
-                }</p></span>`
+                }</p></span><span rootNoteFret="${
+                  note.fret
+                }" class="shape-select root-note-shape-select"></span>`
               : ''
           }</div>`
     )
@@ -278,13 +278,13 @@ function buildShapeSelect(shapes) {
     }
   });
 
-  document.getElementById('shape-select').innerHTML = shapes
+  document.getElementById('shape-select-buttons').innerHTML = shapes
     .map(
       (shape, shapeIndex) =>
         `<button 
     shapeIndex=${shapeIndex}
     shapeFret=${shape.fret} 
-    class="shape-select ${
+    class="shape-select shape-select-button ${
       Number(selectedShape.index) === Number(shapeIndex) ? 'selected-shape' : ''
     }">
     ${shape.number}

@@ -112,7 +112,8 @@ option {
   flex-direction: row-reverse; }
 
 .portrait-mode .controls-wrapper {
-  height: 50%;
+  height: 100%;
+  padding: 5px;
   width: 8%;
   display: flex;
   flex-direction: column;
@@ -129,6 +130,12 @@ option {
   transform: rotate(90deg);
   transform-origin: bottom left;
   font-family: 'Roboto', sans-serif; }
+
+.portrait-mode #shape-select-buttons {
+  flex-direction: column; }
+  .portrait-mode #shape-select-buttons .shape-select {
+    margin: 5px;
+    transform: rotate(90deg); }
 
 .portrait-mode .guitar-wrapper {
   height: 100%;
@@ -173,8 +180,6 @@ option {
   border-left: 1px dashed darkgrey; }
 
 .portrait-mode .note-text-backdrop {
-  height: 20px;
-  width: 20px;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
@@ -187,6 +192,8 @@ option {
   position: absolute;
   color: black;
   font-family: 'Roboto', sans-serif; }
+  .portrait-mode .note-text p {
+    padding: 5px; }
 
 .portrait-mode .root-note {
   height: 8.33%;
@@ -218,9 +225,9 @@ option {
   align-items: stretch; }
 
 .landscape-mode .controls-wrapper {
+  padding: 5px;
   height: 5%;
   width: 100%;
-  margin-bottom: 50px;
   display: flex;
   justify-content: space-between;
   flex-grow: 1; }
@@ -286,8 +293,6 @@ option {
   position: absolute; }
 
 .landscape-mode .note-text {
-  width: 20px;
-  height: 20px;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
@@ -295,6 +300,8 @@ option {
   color: black;
   font-family: 'Roboto', sans-serif;
   font-size: 1rem; }
+  .landscape-mode .note-text p {
+    padding: 5px; }
 
 .landscape-mode .fret-dot {
   width: 20px;
@@ -307,12 +314,20 @@ option {
   border-radius: 100%; }
 
 .highlight {
-  border: 1px solid blue;
   text-align: center;
-  background: lightblue; }
+  background: #a7ffa8; }
+
+#shape-select-buttons {
+  display: inline-flex;
+  flex-direction: row; }
+  #shape-select-buttons .shape-select-button {
+    margin: 5px; }
+  #shape-select-buttons .shape-select-button:hover {
+    border: 2px solid #2dff2f; }
 
 .selected-shape {
-  border: 2px solid black; }
+  border: 2px solid #2dff2f;
+  background: #a7ffa8; }
 
 .root-note {
   height: 0.5rem;
@@ -330,10 +345,10 @@ option {
   left: 50%;
   transform: translate(-50%, -50%);
   position: absolute;
-  background: blue; }
+  border: 2px solid #2dff2f; }
 
 .root-note-text {
-  width: 20px;
+  width: 30px;
   height: 20px;
   top: 50%;
   left: 50%;
@@ -347,9 +362,15 @@ option {
     pointer-events: none; }
 
 .root-note-shape-select {
-  text-decoration: none;
-  font-family: Arial;
-  display: block; }
+  background: none;
+  border: 2px solid #a7ffa8;
+  width: 40px;
+  height: 40px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  position: absolute;
+  z-index: 1000; }
 
 .selected-root-note {
-  background: green; }
+  border: 4px solid #2dff2f; }
