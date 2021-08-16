@@ -140,20 +140,22 @@ $green-background: #a7ffa8;
     transform: rotate(90deg);
     transform-origin: bottom left;
     font-family: 'Roboto', sans-serif;
+    font-size: .8rem
   }
 
   #shape-select-buttons {
     flex-direction: column;
-    .shape-select {
+    .shape-select-button {
+      font-size: .8rem;
       margin: 5px;
+      padding: 2px;
       transform: rotate(90deg);
     }
   }
 
   .guitar-wrapper {
     height: 100%;
-    width: 92%;
-    flex-grow: 1;
+    width: 90%;
   }
 
   .fret-board {
@@ -273,6 +275,7 @@ $green-background: #a7ffa8;
     margin-left: 10px;
     margin-right: 10px;
     font-family: 'Roboto', sans-serif;
+    font-size: 1rem;
   }
 
   .guitar-wrapper {
@@ -367,9 +370,10 @@ $green-background: #a7ffa8;
   flex-direction: row;
   .shape-select-button {
     margin: 5px;
-  }
-  .shape-select-button:hover {
-    border: 2px solid $green-highlight;
+    padding: 5px;
+    text-align: center;
+    border: none;
+    font-size: 1.1rem;
   }
 }
 
