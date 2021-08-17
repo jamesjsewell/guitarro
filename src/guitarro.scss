@@ -119,6 +119,11 @@ $green-background: #a7ffa8;
     flex-direction: row-reverse;
   }
 
+
+  .bmc-btn-container{
+    visibility: hidden;
+  }
+
   .controls-wrapper {
     height: 70%;
     padding: 5px;
@@ -254,6 +259,11 @@ $green-background: #a7ffa8;
     display: flex;
     flex-direction: column;
     align-items: stretch;
+  }
+
+
+  .bmc-btn-container{
+    visibility: visible;
   }
 
   .controls-wrapper {
@@ -442,4 +452,18 @@ $green-background: #a7ffa8;
   padding: 0;
   flex-grow: 1;
   flex-basis: 0;
+}
+
+.bmc-btn {
+  font-size: .7rem !important;
+  height: auto !important;
+  width: 120px !important;
+  padding: 0px 10px !important;
+  min-width: 0 !important;
+
+}
+
+.bmc-btn-container{
+  display: flex;
+  align-items: center;
 }
