@@ -133,6 +133,10 @@ $green-background: #a7ffa8;
     justify-content: space-between;
   }
 
+  .end-buttons{
+    display: block;
+  }
+
   .key-and-scale-select {
     display: inline-flex;
     flex-direction: column;
